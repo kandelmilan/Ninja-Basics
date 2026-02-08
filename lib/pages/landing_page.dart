@@ -30,163 +30,192 @@ class _LandingPageState extends ConsumerState<LandingPage> {
     final postsAsync = ref.watch(postProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('To-Do & API Posts')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            // Login button
-            Padding(
-              padding: const EdgeInsets.only(left: 316),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const LoginPage()),
-                  );
-                },
-                child: const Text('Login'),
-              ),
-            ),
-
-            const SizedBox(height: 10),
-
-            // To-Do input row
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: taskController,
-                    decoration: const InputDecoration(labelText: 'Task'),
+      appBar: AppBar(
+        title: const Text('Dashboard'),
+        backgroundColor: Colors.indigo,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout,color: Colors.white,),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const LoginPage()),
+              );
+            },
+          )
+        ],
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF3F51B5),
+              Color(0xFFE8EAF6),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              // To-Do input
+              Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                elevation: 6,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: taskController,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter a new task',
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.indigo,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onPressed: () {
+                          if (taskController.text.isNotEmpty) {
+                            ref.read(todoProvider.notifier).addtask(taskController.text);
+                            taskController.clear();
+                          }
+                        },
+                        child: const Text('Add',style: TextStyle(color: Colors.white),),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  onPressed: () {
-                    if (taskController.text.isNotEmpty) {
-                      ref.read(todoProvider.notifier)
-                          .addtask(taskController.text);
-                      taskController.clear();
-                    }
-                  },
-                  child: const Text('Add'),
-                ),
-              ],
-            ),
+              ),
 
-            const SizedBox(height: 10),
+              const SizedBox(height: 16),
 
-            // Scrollable area for To-Do list and API posts
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // To-Do List
-                    const Text(
-                      'To-Do List',
-                      style:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: todos.length,
-                      itemBuilder: (context, index) {
-                        final todo = todos[index];
-                        return ListTile(
-                          leading: Checkbox(
-                            value: todo.done,
-                            onChanged: (_) {
-                              ref
-                                  .read(todoProvider.notifier)
-                                  .toggleDone(index);
+              // To-Do list
+              Expanded(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  elevation: 6,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'To-Do List',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.indigo),
+                        ),
+                        const Divider(color: Colors.indigo),
+                        Expanded(
+                          child: todos.isEmpty
+                              ? const Center(
+                            child: Text(
+                              'No tasks added yet!',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          )
+                              : ListView.builder(
+                            itemCount: todos.length,
+                            itemBuilder: (context, index) {
+                              final todo = todos[index];
+                              return ListTile(
+                                leading: Checkbox(
+                                  value: todo.done,
+                                  onChanged: (_) {
+                                    ref.read(todoProvider.notifier).toggleDone(index);
+                                  },
+                                ),
+                                title: Text(
+                                  todo.task,
+                                  style: TextStyle(
+                                      decoration: todo.done
+                                          ? TextDecoration.lineThrough
+                                          : null),
+                                ),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.edit, color: Colors.indigo),
+                                      onPressed: () => showEditDialog(
+                                          context, index, todo.task),
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.delete, color: Colors.red),
+                                      onPressed: () => showDeleteDialog(context, index),
+                                    ),
+                                  ],
+                                ),
+                              );
                             },
                           ),
-                          title: Text(todo.task),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () => showEditDialog(
-                                    context, index, todo.task),
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.delete),
-                                onPressed: () =>
-                                    showDeleteDialog(context, index),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
-
-                    const Divider(),
-
-                    // API Posts
-                    const Text(
-                      'API Posts',
-                      style:
-                      TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    postsAsync.when(
-                      data: (posts) => ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: posts.length,
-                        itemBuilder: (context, index) {
-                          final post = posts[index];
-                          return Card(
-                            margin: const EdgeInsets.symmetric(vertical: 4),
-                            child: ListTile(
-                              title: Text(post.title),
-                              subtitle: Text(
-                                post.body,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                      error: (e, _) => Center(child: Text(e.toString())),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
 
-            const SizedBox(height: 10),
+              const SizedBox(height: 16),
 
-            // Buttons for Post pages
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const PostPage()),
-                    );
-                  },
-                  child: const Text('Get Post by ID'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const CreatePostPage()),
-                    );
-                  },
-                  child: const Text('Post data'),
-                ),
-              ],
-            ),
-          ],
+              // Post buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.indigo,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const PostPage()),
+                        );
+                      },
+                      child: const Text('Get Post by ID',style: TextStyle(color: Colors.white),),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.indigo,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const CreatePostPage()),
+                        );
+                      },
+                      child: const Text('Post Data' ,style: TextStyle(color: Colors.white),),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

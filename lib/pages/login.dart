@@ -155,23 +155,30 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           ),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              if (email == 'admin@gmail.com' &&
-                                  password == 'admin123') {
+                              final registeredEmail = ref.watch(registeredEmailProvider);
+                              final registeredPassword = ref.watch(registeredPasswordProvider);
+
+                              if (email == registeredEmail && password == registeredPassword) {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                    const LandingPage(),
+                                    builder: (context) => const LandingPage(),
                                   ),
                                 );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content:
-                                    Text('Invalid email or password'),
-                                  ),
+                              } else if(email == 'admin@gmail.com' && password == 'admin123') {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const LandingPage(),
+                                    ),
                                 );
                               }
+                              else{
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Invalid email or password')),
+                                );
+                              }
+
 
                               emailController.clear();
                               passwordController.clear();

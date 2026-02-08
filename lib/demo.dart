@@ -119,3 +119,39 @@ class _LandingPageState extends ConsumerState<LandingPage> {
     );
   }
 }
+
+
+
+// API DATA :-
+
+// const Divider(),
+// // API Posts
+// const Text(
+//   'API Posts',
+//   style:
+//   TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+// ),
+// postsAsync.when(
+//   data: (posts) => ListView.builder(
+//     physics: const NeverScrollableScrollPhysics(),
+//     shrinkWrap: true,
+//     itemCount: posts.length,
+//     itemBuilder: (context, index) {
+//       final post = posts[index];
+//       return Card(
+//         margin: const EdgeInsets.symmetric(vertical: 4),
+//         child: ListTile(
+//           title: Text(post.title),
+//           subtitle: Text(
+//             post.body,
+//             maxLines: 2,
+//             overflow: TextOverflow.ellipsis,
+//           ),
+//         ),
+//       );
+//     },
+//   ),
+//   loading: () =>
+//   const Center(child: CircularProgressIndicator()),
+//   error: (e, _) => Center(child: Text(e.toString())),
+// ),
