@@ -28,6 +28,7 @@ class DashboardPage extends ConsumerWidget {
             _collegeHeader(),
             _greetingCard(),
             _academicsSection(),
+            _todayClasses(),
           ],
         ),
       ),
@@ -200,7 +201,12 @@ class DashboardPage extends ConsumerWidget {
           ],
         ),
         child: Column(
-
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _sectionHeader("Today's Classes"),
+            const SizedBox(height: 6,),
+            Text('No classes scheduled for today',style: TextStyle(fontSize: 15),),
+          ],
         ),
       ),
     );
