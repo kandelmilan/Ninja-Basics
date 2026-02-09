@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test_app/pages/NewUI.dart';
 import 'package:flutter_test_app/pages/login.dart';
 import '../providers/todo_provider.dart';
 import '../providers/post_provider.dart';
@@ -173,7 +174,7 @@ class _LandingPageState extends ConsumerState<LandingPage> {
 
               // Post buttons
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Expanded(
                     child: ElevatedButton(
@@ -210,6 +211,25 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                         );
                       },
                       child: const Text('Post Data' ,style: TextStyle(color: Colors.white),),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.indigo,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const DashboardPage()),
+                        );
+                      },
+                      child: const Text('Next Page' ,style: TextStyle(color: Colors.white),),
                     ),
                   ),
                 ],
