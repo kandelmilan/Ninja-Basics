@@ -29,7 +29,7 @@ class DashboardPage extends ConsumerWidget {
             _greetingCard(),
             _academicsSection(),
             _todayClasses(),
-            // _upComingEvents(),
+            _UpcomingEvents(),
           ],
         ),
       ),
@@ -213,7 +213,101 @@ class DashboardPage extends ConsumerWidget {
       ),
     );
   }
+  Widget _UpcomingEvents(){
+    return Padding(padding: const EdgeInsets.only(left: 16,bottom: 20),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(padding: EdgeInsets.only(right: 16),
+        child: _sectionHeader('Upcoming Events'),
+        ),
+        const SizedBox(height: 12,),
+        SizedBox(
+          height: 320,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+                _eventCard(
+                  image: 'assets/man.png',
+                  date: "10 Feb 12:00 AM - 12:00 AM",
+                  title: 'Building Construction III (TH) - Final Project Report Submission and Presentation 3rd Year 1st Part (BAR)',
+                ),
+              _eventCard(
+                image: 'assets/man.png',
+                date: "10 Feb 12:00 AM - 12:00 AM",
+                title:'Thesis Presentation - Mid Term (BAR)', ),
+            ],
+            
+          ),
+        )
+      ],
+    ),
+    );
+  }
 
+Widget _eventCard({required String image,required String date,required String title,}){
+    return Container(
+      width: 240,
+      margin: const EdgeInsets.only(right: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(color:Colors.black12,blurRadius: 6),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(16),
+            ),
+            child: Image.asset(
+              image,
+              height: 140,
+                width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
 
-
+          Padding(padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                date,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 6,),
+              Text(
+                title,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 8,),
+              Row(
+                children: [
+                  Icon(Icons.location_on,
+                  size: 16,color: Colors.grey,),
+                  SizedBox(width: 4,),
+                  Text(
+                    'Himalaya College',
+                    style: TextStyle(fontSize: 12),
+                  )
+                ],
+              )
+            ],
+          ),)
+        ],
+      ),
+    );
+}
 }
