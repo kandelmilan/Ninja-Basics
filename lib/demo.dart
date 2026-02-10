@@ -405,3 +405,147 @@ class DashboardPage extends ConsumerWidget {
     );
   }
 }
+
+
+//
+//
+// Widget _upComingEvents() {
+//   return Padding(
+//     padding: const EdgeInsets.only(left: 16, bottom: 20),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Padding(
+//           padding: const EdgeInsets.only(right: 16),
+//           child: _sectionHeader("Upcoming Events"),
+//         ),
+//         const SizedBox(height: 12),
+//
+//         SizedBox(
+//           height: 320,
+//           child: ListView(
+//             scrollDirection: Axis.horizontal,
+//             children: [
+//               _eventCard(
+//                 image: 'assets/event1.jpg',
+//                 date: '10 Feb, 12:00 AM – 12:00 AM',
+//                 title:
+//                 'Building Construction III (TH) - Final Project Report Submission and Presentation 3rd Year 1st Part (BAR)',
+//               ),
+//               _eventCard(
+//                 image: 'assets/event2.jpg',
+//                 date: '10 Feb, 12:00 AM – 12:00 AM',
+//                 title:
+//                 'Thesis Presentation - Mid Term (BAR)',
+//               ),
+//             ],
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }
+//
+//
+// Widget _eventCard({
+//   required String image,
+//   required String date,
+//   required String title,
+// }) {
+//   return Container(
+//     width: 240,
+//     margin: const EdgeInsets.only(right: 16),
+//     decoration: BoxDecoration(
+//       color: Colors.white,
+//       borderRadius: BorderRadius.circular(16),
+//       boxShadow: const [
+//         BoxShadow(color: Colors.black12, blurRadius: 6),
+//       ],
+//     ),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         // -------- IMAGE --------
+//         ClipRRect(
+//           borderRadius: const BorderRadius.vertical(
+//             top: Radius.circular(16),
+//           ),
+//           child: Image.asset(
+//             image,
+//             height: 140,
+//             width: double.infinity,
+//             fit: BoxFit.cover,
+//           ),
+//         ),
+//
+//         // -------- CONTENT --------
+//         Padding(
+//           padding: const EdgeInsets.all(12),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Text(
+//                 date,
+//                 style: const TextStyle(
+//                   fontSize: 12,
+//                   color: Colors.grey,
+//                 ),
+//               ),
+//               const SizedBox(height: 6),
+//               Text(
+//                 title,
+//                 maxLines: 3,
+//                 overflow: TextOverflow.ellipsis,
+//                 style: const TextStyle(
+//                   fontSize: 14,
+//                   fontWeight: FontWeight.w600,
+//                 ),
+//               ),
+//               const SizedBox(height: 8),
+//               Row(
+//                 children: const [
+//                   Icon(Icons.location_on,
+//                       size: 16, color: Colors.grey),
+//                   SizedBox(width: 4),
+//                   Text(
+//                     'Himalaya College',
+//                     style: TextStyle(fontSize: 12),
+//                   ),
+//                 ],
+//               ),
+//             ],
+//           ),
+//         ),
+//
+//         const Spacer(),
+//
+//         // -------- ACTIONS --------
+//         Padding(
+//           padding: const EdgeInsets.all(12),
+//           child: Row(
+//             children: [
+//               CircleAvatar(
+//                 radius: 18,
+//                 backgroundColor: Colors.blue.shade100,
+//                 child: const Icon(Icons.add, color: Colors.blue),
+//               ),
+//               const SizedBox(width: 12),
+//               Expanded(
+//                 child: ElevatedButton(
+//                   onPressed: () {},
+//                   style: ElevatedButton.styleFrom(
+//                     backgroundColor: Colors.blue,
+//                     shape: RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.circular(20),
+//                     ),
+//                   ),
+//                   child: const Text('Interested'),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }

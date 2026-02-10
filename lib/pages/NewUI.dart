@@ -29,6 +29,7 @@ class DashboardPage extends ConsumerWidget {
             _greetingCard(),
             _academicsSection(),
             _todayClasses(),
+            // _upComingEvents(),
           ],
         ),
       ),
@@ -74,7 +75,7 @@ class DashboardPage extends ConsumerWidget {
                   child: Icon(Icons.person, size: 32, color: Colors.blue,),
                 ),
                 const SizedBox(width: 12,),
-                Expanded(child: Text('Good Evening ,\nMilan Kandel',
+                Expanded(child: Text('Good Evening , Milan Kandel',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -188,7 +189,7 @@ class DashboardPage extends ConsumerWidget {
     );
   }
 
-  Widget _todayClasses(){
+  Widget _todayClasses() {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(
@@ -197,7 +198,7 @@ class DashboardPage extends ConsumerWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
           boxShadow: [
-            BoxShadow(color: Colors.black12,blurRadius: 6),
+            BoxShadow(color: Colors.black12, blurRadius: 6),
           ],
         ),
         child: Column(
@@ -205,10 +206,14 @@ class DashboardPage extends ConsumerWidget {
           children: [
             _sectionHeader("Today's Classes"),
             const SizedBox(height: 6,),
-            Text('No classes scheduled for today',style: TextStyle(fontSize: 15),),
+            Text('No classes scheduled for today',
+              style: TextStyle(fontSize: 15),),
           ],
         ),
       ),
     );
   }
+
+
+
 }
