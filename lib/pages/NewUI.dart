@@ -8,7 +8,7 @@ class DashboardPage extends ConsumerStatefulWidget {
   ConsumerState<DashboardPage> createState() => _DashboardPageState();
 }
 class _DashboardPageState extends ConsumerState<DashboardPage>{
-int _currentIndex=2;
+// int _currentIndex=2;
 
   @override
   Widget build(BuildContext context) {
@@ -26,41 +26,41 @@ int _currentIndex=2;
           )
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        selectedFontSize: 14,
-        unselectedFontSize: 12,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.campaign),
-            label: 'Notice',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.payments),
-            label: 'Fees',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   currentIndex: _currentIndex,
+      //   type: BottomNavigationBarType.fixed,
+      //   selectedItemColor: Colors.blue,
+      //   unselectedItemColor: Colors.grey,
+      //   selectedFontSize: 14,
+      //   unselectedFontSize: 12,
+      //   onTap: (index) {
+      //     setState(() {
+      //       _currentIndex = index;
+      //     });
+      //   },
+      //   items: const [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.campaign),
+      //       label: 'Notice',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.calendar_today),
+      //       label: 'Calendar',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.dashboard),
+      //       label: 'Dashboard',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.payments),
+      //       label: 'Fees',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.person),
+      //       label: 'Profile',
+      //     ),
+      //   ],
+      // ),
 
 
       body: SingleChildScrollView(
