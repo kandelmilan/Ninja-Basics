@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test_app/ExamApp/LogoLanding.dart';
 import 'package:flutter_test_app/demo.dart';
 import 'package:flutter_test_app/pages/landing_page.dart';
 import 'pages/login.dart';
@@ -13,9 +14,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LandingPage(),
+      home: LogoLanding(),
     );
   }
 }

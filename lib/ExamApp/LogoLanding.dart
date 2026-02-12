@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test_app/ExamApp/onBoarding.dart';
 import 'package:flutter_test_app/pages/landing_page.dart';
 
-class Logolanding extends ConsumerStatefulWidget {
-  Logolanding({super.key});
+class LogoLanding extends ConsumerStatefulWidget {
+  LogoLanding({super.key});
   @override
-  ConsumerState<Logolanding> createState()=>_LogoLandingState();
+  ConsumerState<LogoLanding> createState()=>_LogoLandingState();
 }
-class _LogoLandingState extends ConsumerState<Logolanding>{
+class _LogoLandingState extends ConsumerState<LogoLanding>{
   void initState() {
     super.initState();
 

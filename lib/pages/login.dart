@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test_app/ExamApp/examLanding.dart';
 import 'landing_page.dart';
 import 'signup.dart';
 
@@ -162,14 +163,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const LandingPage(),
+                                    builder: (context) => examLanding(),
                                   ),
                                 );
                               } else if(email == 'admin@gmail.com' && password == 'admin123') {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const LandingPage(),
+                                      builder: (context) =>  examLanding(),
                                     ),
                                 );
                               }

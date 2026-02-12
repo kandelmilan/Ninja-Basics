@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_test_app/ExamApp/LogoLanding.dart';
 import 'package:flutter_test_app/pages/NewUI.dart';
 import 'package:flutter_test_app/pages/login.dart';
 import '../providers/todo_provider.dart';
@@ -41,10 +40,10 @@ class _LandingPageState extends ConsumerState<LandingPage> {
             onPressed: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (_) => Logolanding()),
+                MaterialPageRoute(builder: (_) => const LoginPage()),
               );
             },
-          ),
+          )
         ],
       ),
       body: Container(
@@ -233,7 +232,6 @@ class _LandingPageState extends ConsumerState<LandingPage> {
                       child: const Text('Next Page' ,style: TextStyle(color: Colors.white),),
                     ),
                   ),
-
                 ],
               ),
             ],

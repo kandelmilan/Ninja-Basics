@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test_app/pages/generalUI.dart';
 
 class examLanding extends ConsumerStatefulWidget{
   examLanding({super.key});
@@ -89,6 +90,18 @@ class _examLandingState extends ConsumerState<examLanding> {
             size: 22,
             color: Colors.black87,
           ),
+          // child: IconButton(
+          //   icon: const Icon(Icons.logout,size: 22,
+          //      color: Colors.black87,),
+          //   onPressed: () {
+          //     Navigator.pushReplacement(
+          //       context,
+          //       MaterialPageRoute(builder: (_) => LoginPage()),
+          //     );
+          //   },
+          // ),
+
+
         ),
       ],
     );
