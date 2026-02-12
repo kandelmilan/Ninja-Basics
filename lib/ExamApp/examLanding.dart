@@ -25,7 +25,10 @@ class _examLandingState extends ConsumerState<examLanding> {
                 const SizedBox(height: 20),
                 _examCard(),
                 const SizedBox(height: 20),
+                _descPractice(),
+                const SizedBox(height: 20,),
                 _statsSection(),
+                const SizedBox(height: 20,),
               ],
             ),
           ),
@@ -90,8 +93,6 @@ class _examLandingState extends ConsumerState<examLanding> {
       ],
     );
   }
-
-  //  Subject Chips
 
   Widget _subjectChips() {
     return Wrap(
@@ -279,13 +280,174 @@ class _examLandingState extends ConsumerState<examLanding> {
     );
   }
 
-
-
-
   Widget _statsSection() {
-    return const Text(
-      "Your Stats: 85% Accuracy",
-      style: TextStyle(fontSize: 16),
+   return Column(
+     children: [
+       Row(
+         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+         children: [
+           Expanded(
+             child: _statCard(icon: Icons.check,
+                 iconColor: Colors.green,
+                 value: "84",
+                 label: "Accuracy"),
+           ),
+           SizedBox(width: 14,),
+           Expanded(
+             child: _statCard(icon: Icons.local_fire_department,
+                 iconColor: Colors.orange,
+                 value: "12",
+                 label: "Day Streak"),
+           ),
+           SizedBox(width: 14,),
+           Expanded(
+             child: _statCard(icon: Icons.emoji_events,
+                 iconColor: Colors.purple,
+                 value: "48",
+                 label: "Accuracy"),
+           ),
+           SizedBox(width: 14,),
+           Expanded(
+             child: _statCard(icon: Icons.schedule,
+                 iconColor: Colors.blue,
+                 value: "18h",
+                 label: "Weekly"),
+           ),
+           SizedBox(width: 14,),
+
+         ],
+       )
+     ],
+   );
+  }
+  Widget _statCard({
+    required IconData icon,
+    required Color iconColor,
+    required String value,
+    required String label,
+  }) {
+    return Container(
+      width: 74.75,
+      height: 132,
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.grey.shade300,
+          width: 1,
+        ),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Icon circle (slightly smaller)
+          Container(
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: iconColor.withOpacity(0.1),
+            ),
+            child: Icon(
+              icon,
+              color: iconColor,
+              size: 20,
+            ),
+          ),
+
+          const SizedBox(height: 8),
+
+          // Value
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+
+          const SizedBox(height: 4),
+
+          // Label (prevent overflow)
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey.shade600,
+            ),
+          ),
+        ],
+      ),
     );
   }
+
+  Widget _descPractice(){
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10
+          )
+        ]
+      ),
+      child:Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Continue where you left off",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
+            ),
+          ),
+          const SizedBox(height: 6,),
+          Text(
+            "Level 6-ALgebra Practice",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          const SizedBox(height: 10,),
+          ElevatedButton(onPressed: (){
+
+          },
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity,48),
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                )
+              ),
+              child:Text(
+                  "Resume Practice",
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 16,
+                fontWeight: FontWeight.bold
+              ),))
+        ],
+      ),
+    );
+  }
+
+
 }
