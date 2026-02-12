@@ -25,8 +25,6 @@ class _examLandingState extends ConsumerState<examLanding> {
                 const SizedBox(height: 20),
                 _examCard(),
                 const SizedBox(height: 20),
-                _continuePracticeCard(),
-                const SizedBox(height: 20),
                 _statsSection(),
               ],
             ),
@@ -129,27 +127,28 @@ class _examLandingState extends ConsumerState<examLanding> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
         color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
         boxShadow: const [
           BoxShadow(
             blurRadius: 10,
             offset: Offset(0, 4),
             color: Colors.black12,
-          )
+          ),
         ],
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// LEFT SIDE
+          // LEFT SIDE - Next Exam
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Row(
                   children: const [
-                    Icon(Icons.calendar_today,
-                        size: 18, color: Colors.blue),
+                    Icon(Icons.calendar_today, size: 18, color: Colors.blue),
                     SizedBox(width: 6),
                     Text(
                       "Next Exam",
@@ -159,24 +158,24 @@ class _examLandingState extends ConsumerState<examLanding> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 6),
                 Text(
                   "May 23, 2003",
                   style: TextStyle(
                     fontSize: 13,
-                    color: Colors.grey.shade500,
+                    color: Colors.grey.shade600,
                   ),
-                ), Container(
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  width: 100,
                   padding: const EdgeInsets.all(16),
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(16)),
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFF0D47A1),
-                        Color(0xFF42A5F5),
-                      ],
+                      colors: [Color(0xFF0D47A1), Color(0xFF42A5F5)],
                     ),
                   ),
                   child: const Column(
@@ -193,12 +192,17 @@ class _examLandingState extends ConsumerState<examLanding> {
                       SizedBox(height: 4),
                       Text(
                         "days left",
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.white70,
-                        ),
+                        style: TextStyle(fontSize: 12, color: Colors.white70),
                       ),
                     ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  "Medical Entrance Exam",
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey.shade700,
                   ),
                 ),
               ],
@@ -207,28 +211,76 @@ class _examLandingState extends ConsumerState<examLanding> {
 
           const SizedBox(width: 16),
 
-          /// RIGHT SIDE (Days Left Card)
-         Container(
-           width: 100,
-           child: Text(
-             "this is the right sidde "
-           ),
-         )
+          // RIGHT SIDE - Last Exam
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: const [
+                    Icon(Icons.history, size: 18, color: Colors.green),
+                    SizedBox(width: 6),
+                    Text(
+                      "Last Exam",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  "Apr 15, 2025",
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Container(
+                  width: 100,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.green.shade50,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Text(
+                        "87",
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        "Score",
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  "View Report →",
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
 
-  Widget _continuePracticeCard() {
-    return Card(
-      elevation: 3,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: const Text("Continue Practice"),
-      ),
-    );
-  }
+
 
   Widget _statsSection() {
     return const Text(
