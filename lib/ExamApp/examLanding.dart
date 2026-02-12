@@ -8,70 +8,148 @@ class examLanding extends ConsumerStatefulWidget{
   @override
   ConsumerState<examLanding> createState()=>_examLandingState();
 }
-class _examLandingState extends ConsumerState<examLanding>{
-  Widget build(BuildContext context){
+class _examLandingState extends ConsumerState<examLanding> {
+  Widget build(BuildContext context) {
     return Scaffold(
-      body:SafeArea(
-          child: SingleChildScrollView(
-            child:Padding(
-              padding:const EdgeInsets.symmetric(horizontal: 16),
-            child:Column(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _greetingSection(),
-            ],
-            ),
+              children: [
+                const SizedBox(height: 16),
+                _greetingSection(),
+                const SizedBox(height: 20),
+                _subjectChips(),
+                const SizedBox(height: 20),
+                _examCard(),
+                const SizedBox(height: 20),
+                _continuePracticeCard(),
+                const SizedBox(height: 20),
+
+              ],
             ),
           ),
+        ),
       ),
     );
   }
 
-  Widget _greetingSection(){
+  Widget _greetingSection() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         CircleAvatar(
-          radius:26,
-          backgroundImage: AssetImage('assets/man.png'),
-          backgroundColor: Colors.lightGreen,
+          radius: 26,
+          backgroundImage: const AssetImage('assets/man.png'),
+          backgroundColor: Colors.grey.shade300,
         ),
-        SizedBox(width: 12),
-        Expanded(child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-               children: [
-                 Text("Hi,Rajan",
-                 style: TextStyle(
-                   fontWeight: FontWeight.bold,
-                 ),),
-               ],
-            )
-          ],
-        ),
-        ),
-        SizedBox(height: 6,),
-        Text(
-          'Preparing for:Medical Entrance Exam',
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w400,
-            color: Colors.grey,
+        const SizedBox(width: 12),
+
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: const [
+                  Text(
+                    "Hi, Rajan",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(width: 6),
+                  Text("👋"),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                "Preparing for: Medical Entrance Exam",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            ],
           ),
         ),
+
         Container(
           height: 45,
           width: 45,
           decoration: BoxDecoration(
+            color: Colors.grey.shade200,
             borderRadius: BorderRadius.circular(22),
-            color: Colors.lightGreen,
           ),
-          child: Icon(Icons.notifications_none,size: 22,color: Colors.black45,),
-        )
-    ],
+          child: const Icon(
+            Icons.notifications_none,
+            size: 22,
+            color: Colors.black87,
+          ),
+        ),
+      ],
     );
   }
 
+  //  Subject Chips
+
+  Widget _subjectChips() {
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        _chip("Math"),
+        _chip("Physics"),
+        _chip("Chemistry"),
+      ],
+    );
+  }
+
+  Widget _chip(String title) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.blue.shade50,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: Colors.blue,
+        ),
+      ),
+    );
+  }
+
+
+  Widget _examCard() {
+    return Card(
+      elevation: 3,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: const Text("Upcoming Exam: 20th Feb"),
+      ),
+    );
+  }
+
+  Widget _continuePracticeCard() {
+    return Card(
+      elevation: 3,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: const Text("Continue Practice"),
+      ),
+    );
+  }
+
+  Widget _statsSection() {
+    return const Text(
+      "Your Stats: 85% Accuracy",
+      style: TextStyle(fontSize: 16),
+    );
+  }
 }
