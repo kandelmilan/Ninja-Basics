@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test_app/ExamApp/examLanding.dart';
 import 'package:flutter_test_app/pages/generalUI.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -76,7 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const LoginPage(),
+                    builder: (_) => ExamLanding(),
                   ),
                 );
               } else {
