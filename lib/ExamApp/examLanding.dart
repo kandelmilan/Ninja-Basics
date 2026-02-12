@@ -27,7 +27,7 @@ class _examLandingState extends ConsumerState<examLanding> {
                 const SizedBox(height: 20),
                 _continuePracticeCard(),
                 const SizedBox(height: 20),
-
+                _statsSection(),
               ],
             ),
           ),
@@ -125,16 +125,100 @@ class _examLandingState extends ConsumerState<examLanding> {
     );
   }
 
-
   Widget _examCard() {
-    return Card(
-      elevation: 3,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: const Text("Upcoming Exam: 20th Feb"),
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.white,
+        boxShadow: const [
+          BoxShadow(
+            blurRadius: 10,
+            offset: Offset(0, 4),
+            color: Colors.black12,
+          )
+        ],
+      ),
+      child: Row(
+        children: [
+          /// LEFT SIDE
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: const [
+                    Icon(Icons.calendar_today,
+                        size: 18, color: Colors.blue),
+                    SizedBox(width: 6),
+                    Text(
+                      "Next Exam",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  "May 23, 2003",
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.grey.shade500,
+                  ),
+                ), Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color(0xFF0D47A1),
+                        Color(0xFF42A5F5),
+                      ],
+                    ),
+                  ),
+                  child: const Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "23",
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        "days left",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(width: 16),
+
+          /// RIGHT SIDE (Days Left Card)
+         Container(
+           width: 100,
+           child: Text(
+             "this is the right sidde "
+           ),
+         )
+        ],
       ),
     );
   }
+
 
   Widget _continuePracticeCard() {
     return Card(
