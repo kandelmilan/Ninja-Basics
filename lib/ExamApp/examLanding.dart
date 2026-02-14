@@ -105,6 +105,7 @@ class _examLandingState extends ConsumerState<examLanding> {
         _chip("Math"),
         _chip("Physics"),
         _chip("Chemistry"),
+        _chip("Social"),
       ],
     );
   }
