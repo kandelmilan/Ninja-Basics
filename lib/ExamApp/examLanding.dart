@@ -90,16 +90,6 @@ class _examLandingState extends ConsumerState<examLanding> {
             size: 22,
             color: Colors.black87,
           ),
-          // child: IconButton(
-          //   icon: const Icon(Icons.logout,size: 22,
-          //      color: Colors.black87,),
-          //   onPressed: () {
-          //     Navigator.pushReplacement(
-          //       context,
-          //       MaterialPageRoute(builder: (_) => LoginPage()),
-          //     );
-          //   },
-          // ),
 
 
         ),
