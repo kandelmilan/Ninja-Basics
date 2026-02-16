@@ -12,10 +12,12 @@ class examLanding extends ConsumerStatefulWidget{
 class _examLandingState extends ConsumerState<examLanding> {
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFEEF2F5),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
+
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -30,6 +32,9 @@ class _examLandingState extends ConsumerState<examLanding> {
                 const SizedBox(height: 20,),
                 _statsSection(),
                 const SizedBox(height: 20,),
+                _quickActionSection(),
+                const SizedBox(height: 20,),
+                suggestedForYouSection(),
               ],
             ),
           ),
@@ -453,101 +458,88 @@ class _examLandingState extends ConsumerState<examLanding> {
       ),
     );
   }
-//   Widget quickAction({
-//         required Icondata icon,
-//         required Color iconColor,
-//         required String label,
-//       }){
-//     return Container(
-//       width: 74.75,
-//       height: 132,
-//       padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 8),
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(4),
-//         border: Border.all(
-//           color: Colors.grey.shade600,
-//           width: 1,
-//         ),
-//         boxShadow: [
-//           BoxShadow(
-//             color: Colors.black12,
-//             blurRadius: 10,
-//             offset: Offset(0, 4),
-//           ),
-//         ],
-//       ),
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//             Container(
-//               height: 40,
-//               width: 40,
-//               decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.circular(3),
-//               ),
-//               child: Icon(
-//                 icon,
-//                 color: iconColor,
-//                 size: 20,
-//               ),
-//             ),
-//           SizedBox(height: 6,),
-//           Text(
-//             label,
-//             textAlign: TextAlign.center,
-//             maxLines: 1,
-//             overflow: TextOverflow.ellipsis,
-//             style: TextStyle(
-//               fontSize: 11,
-//               fontWeight: FontWeight.w500,
-//               color: Colors.grey.shade600,
-//             )
-//
-//           )
-//         ],
-//       ),
-//     );
-// }
-// Widget _quickActionSection() {
-//   return Column(
-//     children: [
-//       Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           Expanded(
-//             child: _quickAction(icon: Icons.check,
-//                 iconColor: Colors.green,
-//                 label: "Accuracy"),
-//           ),
-//           SizedBox(width: 14,),
-//           Expanded(
-//             child: _quickAction(icon: Icons.local_fire_department,
-//                 iconColor: Colors.orange,
-//                 value: "12",
-//                 label: "Day Streak"),
-//           ),
-//           SizedBox(width: 14,),
-//           Expanded(
-//             child: _statCard(icon: Icons.emoji_events,
-//                 iconColor: Colors.purple,
-//                 value: "48",
-//                 label: "Accuracy"),
-//           ),
-//           SizedBox(width: 14,),
-//           Expanded(
-//             child: _statCard(icon: Icons.schedule,
-//                 iconColor: Colors.blue,
-//                 value: "18h",
-//                 label: "Weekly"),
-//           ),
-//           SizedBox(width: 14,),
-//
-//         ],
-//       )
-//     ],
-//   );
-// }
 
 
-// not completed yet as  i was doing the quick action ui desing by coping the about statCard
+  Widget _quickAction({
+        required IconData icon,
+        required Color iconColor,
+        required String label,
+      }){
+    return Container(
+      width: 74.75,
+      height: 132,
+      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+            Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: Colors.lightBlue.shade50,
+              ),
+              child: Icon(
+                icon,
+                color: iconColor,
+                size: 28,
+              ),
+            ),
+          SizedBox(height: 6,),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey.shade600,
+            )
+
+          )
+        ],
+      ),
+    );
+}
+Widget _quickActionSection() {
+  return Column(
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: _quickAction(icon: Icons.layers_sharp,
+                iconColor: Colors.green,
+                label: "Practice by level"),
+          ),
+          SizedBox(width: 14,),
+          Expanded(
+            child: _quickAction(icon: Icons.school,
+                iconColor: Colors.orange,
+                label: "Mock Tests"),
+          ),
+          SizedBox(width: 14,),
+          Expanded(
+            child: _quickAction(icon: Icons.bookmark,
+                iconColor: Colors.purple,
+                label: "Bookmarks"),
+          ),
+          SizedBox(width: 14,),
+
+        ],
+      )
+    ],
+  );
+}
+
+
