@@ -82,9 +82,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       const SizedBox(height: 6),
                       Text(
                         'Login to your account',
-                        style: TextStyle(
-                          color: Colors.grey.shade600,
-                        ),
+                        style: TextStyle(color: Colors.grey.shade600),
                       ),
 
                       const SizedBox(height: 24),
@@ -97,12 +95,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           prefixIcon: Icon(Icons.email, color: Colors.indigo),
                           border: OutlineInputBorder(),
                           focusedBorder: OutlineInputBorder(
-                            borderSide:
-                            BorderSide(color: Colors.indigo, width: 2),
+                            borderSide: BorderSide(
+                              color: Colors.indigo,
+                              width: 2,
+                            ),
                           ),
                         ),
                         onChanged: (val) =>
-                        ref.read(emailProvider.notifier).state = val,
+                            ref.read(emailProvider.notifier).state = val,
                         validator: (val) {
                           if (val == null || !val.contains('@')) {
                             return 'Enter a valid email';
@@ -122,12 +122,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           prefixIcon: Icon(Icons.lock, color: Colors.indigo),
                           border: OutlineInputBorder(),
                           focusedBorder: OutlineInputBorder(
-                            borderSide:
-                            BorderSide(color: Colors.indigo, width: 2),
+                            borderSide: BorderSide(
+                              color: Colors.indigo,
+                              width: 2,
+                            ),
                           ),
                         ),
                         onChanged: (val) =>
-                        ref.read(passwordProvider.notifier).state = val,
+                            ref.read(passwordProvider.notifier).state = val,
                         validator: (val) {
                           if (val == null || val.length < 6) {
                             return 'Password must be at least 6 characters';
@@ -156,15 +158,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                    const LandingPage(),
+                                    builder: (context) => const LandingPage(),
                                   ),
                                 );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content:
-                                    Text('Invalid email or password'),
+                                    content: Text('Invalid email or password'),
                                   ),
                                 );
                               }
@@ -177,10 +177,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           },
                           child: const Text(
                             'Login',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
+                            style: TextStyle(fontSize: 16, color: Colors.white),
                           ),
                         ),
                       ),
@@ -202,8 +199,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                const SignUpPage(),
+                                builder: (context) => const SignUpPage(),
                               ),
                             );
                           },

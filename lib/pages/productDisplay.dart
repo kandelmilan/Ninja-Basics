@@ -11,35 +11,89 @@ class ProductPage extends ConsumerWidget {
     final productAsyncValue = ref.watch(productProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Products")),
+      backgroundColor: Colors.grey[100],
+      appBar: AppBar(
+        title: const Text(
+          "Products",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: productAsyncValue.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(child: Text("Error: $error")),
+        error: (error, stack) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.error_outline, size: 50, color: Colors.red),
+              const SizedBox(height: 10),
+              Text("Something went wrong", style: TextStyle(fontSize: 16)),
+            ],
+          ),
+        ),
         data: (products) {
           return ListView.builder(
+            padding: const EdgeInsets.all(12),
             itemCount: products.length,
             itemBuilder: (context, index) {
-              final Product product = products[index];
+              final product = products[index];
 
-              return Card(
-                margin: const EdgeInsets.all(10),
-                child: ListTile(
-                  leading: Image.network(
-                    product.image,
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
+              return Container(
+                margin: const EdgeInsets.only(bottom: 15),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.network(
+                          product.image,
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product.title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              "\$${product.price}",
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Icon(Icons.arrow_forward_ios, size: 16),
+                    ],
                   ),
-                  title: Text(product.title),
-                  subtitle: Text("\$${product.price}"),
-                  // onTap: () {
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (_) => ProductDetailPage(product: product),
-                  //     ),
-                  //   );
-                  // },
                 ),
               );
             },
