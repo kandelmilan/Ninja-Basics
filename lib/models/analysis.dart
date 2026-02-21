@@ -15,6 +15,8 @@ class Analysis extends StatelessWidget {
               _buildTopStats(),
               SizedBox(height: 12),
               _subPerformance(),
+              SizedBox(height: 12),
+              _smartInsights(),
             ],
           ),
         ),
@@ -223,6 +225,92 @@ Widget _performanceCard({
             minHeight: 8,
             backgroundColor: Colors.grey.shade200,
             color: color,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget _smartInsights() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        "Smart Insights",
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(height: 12),
+
+      _insightCard(
+        title: "Strong Performance",
+        description: "You perform best in Mathematics with 92% accuracy.",
+        icon: Icons.emoji_events,
+        bgColor: const Color(0xFFE6F4EA),
+        iconColor: Colors.green,
+      ),
+      _insightCard(
+        title: "Needs Attention",
+        description: "Your accuracy drops in Time & Work problems.",
+        icon: Icons.warning_amber_rounded,
+        bgColor: const Color(0xFFFFF4E5),
+        iconColor: Colors.orange,
+      ),
+      _insightCard(
+        title: "Peak Productivity",
+        description: "Your performance is 35% higher during evening sessions.",
+        icon: Icons.trending_up,
+        bgColor: const Color(0xFFE8F0FE),
+        iconColor: Colors.blue,
+      ),
+    ],
+  );
+}
+
+Widget _insightCard({
+  required String title,
+  required String description,
+  required IconData icon,
+  required Color bgColor,
+  required Color iconColor,
+}) {
+  return Container(
+    margin: const EdgeInsets.only(bottom: 12),
+    padding: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: bgColor,
+      borderRadius: BorderRadius.circular(18),
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: iconColor.withOpacity(0.15),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(icon, color: iconColor, size: 20),
+        ),
+        const SizedBox(width: 12),
+
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                description,
+                style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+              ),
+            ],
           ),
         ),
       ],

@@ -67,6 +67,7 @@ class _examLandingState extends ConsumerState<examLanding> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.analytics_outlined),
                 label: 'Analytics',
+          
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.settings),
