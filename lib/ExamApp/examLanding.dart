@@ -12,6 +12,15 @@ class examLanding extends ConsumerStatefulWidget {
 
 class _examLandingState extends ConsumerState<examLanding> {
   final selectedIndexProvider = StateProvider<int>((ref) => 0);
+
+  final List<Widget> _pages = [
+    Center(child: Text('Home Page', style: TextStyle(fontSize: 24))),
+      Center(child: Text('Practice Page', style: TextStyle(fontSize: 24))),
+      Center(child: Text('Mocktest Page', style: TextStyle(fontSize: 24))),
+      Center(child: Text('Analytics Page', style: TextStyle(fontSize: 24))),
+      Center(child: Text('Settings Page', style: TextStyle(fontSize: 24))),
+  ];
+  
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFEEF2F5),
@@ -36,6 +45,7 @@ class _examLandingState extends ConsumerState<examLanding> {
                 _quickActionSection(),
                 const SizedBox(height: 20),
                 _SuggestedSection(),
+                const SizedBox(height: 12),
               ],
             ),
           ),
@@ -67,7 +77,6 @@ class _examLandingState extends ConsumerState<examLanding> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.analytics_outlined),
                 label: 'Analytics',
-          
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.settings),

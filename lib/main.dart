@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test_app/ExamApp/LogoLanding.dart';
 import 'package:flutter_test_app/ExamApp/girl.dart';
 import 'package:flutter_test_app/demo.dart';
-import 'package:flutter_test_app/models/analysis.dart';
+import 'package:flutter_test_app/ExamApp/analysis.dart';
 import 'package:flutter_test_app/pages/landing_page.dart';
 import 'package:flutter_test_app/pages/productDisplay.dart';
 import 'pages/login.dart';
@@ -17,8 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: Analysis(),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: LogoLanding());
   }
 }
 
