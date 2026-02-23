@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test_app/ExamApp/analysis.dart';
 import 'package:flutter_test_app/pages/generalUI.dart';
 
 class examLanding extends ConsumerStatefulWidget {
@@ -13,44 +14,58 @@ class examLanding extends ConsumerStatefulWidget {
 class _examLandingState extends ConsumerState<examLanding> {
   final selectedIndexProvider = StateProvider<int>((ref) => 0);
 
-  final List<Widget> _pages = [
-    Center(child: Text('Home Page', style: TextStyle(fontSize: 24))),
-      Center(child: Text('Practice Page', style: TextStyle(fontSize: 24))),
-      Center(child: Text('Mocktest Page', style: TextStyle(fontSize: 24))),
-      Center(child: Text('Analytics Page', style: TextStyle(fontSize: 24))),
-      Center(child: Text('Settings Page', style: TextStyle(fontSize: 24))),
-  ];
-  
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFEEF2F5),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16),
-                _greetingSection(),
-                const SizedBox(height: 20),
-                _subjectChips(),
-                const SizedBox(height: 20),
-                _examCard(),
-                const SizedBox(height: 20),
-                _descPractice(),
-                const SizedBox(height: 20),
-                _statsSection(),
-                const SizedBox(height: 20),
-                _quickActionSection(),
-                const SizedBox(height: 20),
-                _SuggestedSection(),
-                const SizedBox(height: 12),
-              ],
-            ),
+  Widget _buildHomePage() {
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 16),
+              _greetingSection(),
+              const SizedBox(height: 20),
+              _subjectChips(),
+              const SizedBox(height: 20),
+              _examCard(),
+              const SizedBox(height: 20),
+              _descPractice(),
+              const SizedBox(height: 20),
+              _statsSection(),
+              const SizedBox(height: 20),
+              _quickActionSection(),
+              const SizedBox(height: 20),
+              _SuggestedSection(),
+              const SizedBox(height: 12),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  List<Widget> _buildPages() => [
+        _buildHomePage(),
+        Center(
+            child: Text('Practice Page',
+                style: TextStyle(fontSize: 24, color: Colors.grey.shade600))),
+        Center(
+            child: Text('Mocktest Page',
+                style: TextStyle(fontSize: 24, color: Colors.grey.shade600))),
+        Analysis(),
+        Center(
+            child: Text('Settings Page',
+                style: TextStyle(fontSize: 24, color: Colors.grey.shade600))),
+      ];
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedIndex = ref.watch(selectedIndexProvider);
+    final pages = _buildPages();
+
+    return Scaffold(
+      backgroundColor: const Color(0xFFEEF2F5),
+      body: pages[selectedIndex],
       bottomNavigationBar: Consumer(
         builder: (context, ref, child) {
           final selectedIndex = ref.watch(selectedIndexProvider);

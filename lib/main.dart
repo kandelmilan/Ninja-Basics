@@ -25,3 +25,5 @@ class MyApp extends StatelessWidget {
 // open -a Simulator   
 // flutter devices   
 // flutter run   
+
+// this is used to run in the vs code 
