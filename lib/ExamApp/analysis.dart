@@ -317,3 +317,135 @@ Widget _insightCard({
     ),
   );
 }
+
+
+
+// Widget _filterRow() {
+//   return Row(
+//     children: [
+//       _filterButton("All Levels", true),
+//       const SizedBox(width: 3),
+//       _filterButton("Easy", false),
+//       const SizedBox(width: 3),
+//       _filterButton("Medium", false),
+//       const SizedBox(width: 3),
+//       _filterButton("Hard", false),
+//     ],
+//   );
+// }
+
+// Widget _filterButton(String text, bool selected) {
+//   return Container(
+//     padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+//     decoration: BoxDecoration(
+//       color: selected ? const Color(0xFF2F54EB) : Colors.white,
+//       borderRadius: BorderRadius.circular(30),
+//     ),
+//     child: Text(
+//       text,
+//       style: TextStyle(
+//         color: selected ? Colors.white : Colors.black54,
+//         fontWeight: FontWeight.w500,
+//       ),
+//     ),
+//   );
+// }
+
+// Widget _levelCard({
+//   required String level,
+//   required String difficulty,
+//   required String title,
+//   required String subtitle,
+//   required double progress,
+//   bool completed = false,
+//   bool inProgress = false,
+//   String? score,
+// }) {
+//   return Container(
+//     padding: const EdgeInsets.all(18),
+//     decoration: BoxDecoration(
+//       color: completed ? const Color(0xFFE8F7EE) : const Color(0xFFF2F4FF),
+//       borderRadius: BorderRadius.circular(20),
+//     ),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Row(
+//           children: [
+//             _badge(level),
+//             const SizedBox(width: 8),
+//             _difficultyBadge(difficulty),
+//             const Spacer(),
+//             if (completed) const Icon(Icons.check_circle, color: Colors.green),
+//             if (inProgress)
+//               const Icon(Icons.play_circle_fill, color: Color(0xFF2F54EB)),
+//           ],
+//         ),
+//         const SizedBox(height: 10),
+//         Text(
+//           title,
+//           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+//         ),
+//         const SizedBox(height: 4),
+//         Text(subtitle, style: const TextStyle(color: Colors.black54)),
+//         const SizedBox(height: 12),
+//         ClipRRect(
+//           borderRadius: BorderRadius.circular(10),
+//           child: LinearProgressIndicator(
+//             value: progress,
+//             minHeight: 6,
+//             backgroundColor: Colors.grey.shade300,
+//             color: completed ? Colors.green : const Color(0xFF2F54EB),
+//           ),
+//         ),
+//         const SizedBox(height: 10),
+//         if (completed)
+//           Text(
+//             "✓ Completed   Score: $score",
+//             style: const TextStyle(color: Colors.green),
+//           ),
+//         if (inProgress)
+//           const Text(
+//             "▶ In Progress",
+//             style: TextStyle(color: Color(0xFF2F54EB)),
+//           ),
+//       ],
+//     ),
+//   );
+// }
+
+// Widget _difficultyBadge(String text) {
+//   Color color = Colors.green;
+
+//   if (text == "Medium") {
+//     color = Colors.orange;
+//   } else if (text == "Hard") {
+//     color = Colors.red;
+//   }
+
+//   return Container(
+//     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+//     decoration: BoxDecoration(
+//       color: color.withOpacity(0.2),
+//       borderRadius: BorderRadius.circular(20),
+//     ),
+//     child: Text(
+//       text,
+//       style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: color),
+//     ),
+//   );
+// }
+
+// Widget _badge(String text) {
+//   return Container(
+//     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+//     decoration: BoxDecoration(
+//       color: Colors.grey.shade300,
+//       borderRadius: BorderRadius.circular(20),
+//     ),
+//     child: Text(
+//       text,
+//       style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+//     ),
+//   );
+// }
