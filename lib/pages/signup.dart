@@ -6,10 +6,12 @@ import 'login.dart';
 final emailProvider = StateProvider<String>((ref) => '');
 final passwordProvider = StateProvider<String>((ref) => '');
 final confirmPasswordProvider = StateProvider<String>((ref) => '');
+final fullNameProvider = StateProvider<String>((ref) => '');
 
 // Providers for registered credentials (for login)
 final registeredEmailProvider = StateProvider<String>((ref) => '');
 final registeredPasswordProvider = StateProvider<String>((ref) => '');
+final registeredNameProvider = StateProvider<String>((ref) => '');
 
 class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
@@ -21,13 +23,18 @@ class SignUpPage extends ConsumerStatefulWidget {
 class _SignUpPageState extends ConsumerState<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
 
+  late final TextEditingController nameController;
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
   late final TextEditingController confirmPasswordController;
 
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
+
   @override
   void initState() {
     super.initState();
+    nameController = TextEditingController();
     emailController = TextEditingController();
     passwordController = TextEditingController();
     confirmPasswordController = TextEditingController();
@@ -35,6 +42,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
   @override
   void dispose() {
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
@@ -105,9 +113,33 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       ),
                       const SizedBox(height: 24),
 
+                      // Full name
+                      TextFormField(
+                        controller: nameController,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          labelText: 'Full name',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          prefixIcon: const Icon(Icons.person_outline),
+                        ),
+                        onChanged: (val) =>
+                            ref.read(fullNameProvider.notifier).state = val,
+                        validator: (val) {
+                          if (val == null || val.trim().length < 3) {
+                            return 'Enter your full name';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 16),
+
                       // Email
                       TextFormField(
                         controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
                         decoration: InputDecoration(
                           labelText: 'Email',
                           border: OutlineInputBorder(
@@ -129,12 +161,24 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       // Password
                       TextFormField(
                         controller: passwordController,
-                        obscureText: true,
+                        obscureText: _obscurePassword,
                         decoration: InputDecoration(
                           labelText: 'Password',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12)),
                           prefixIcon: const Icon(Icons.lock_outline),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscurePassword = !_obscurePassword;
+                              });
+                            },
+                          ),
                         ),
                         onChanged: (val) =>
                         ref.read(passwordProvider.notifier).state = val,
@@ -150,12 +194,25 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                       // Confirm Password
                       TextFormField(
                         controller: confirmPasswordController,
-                        obscureText: true,
+                        obscureText: _obscureConfirmPassword,
                         decoration: InputDecoration(
                           labelText: 'Confirm Password',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12)),
                           prefixIcon: const Icon(Icons.lock_outline),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureConfirmPassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscureConfirmPassword =
+                                    !_obscureConfirmPassword;
+                              });
+                            },
+                          ),
                         ),
                         onChanged: (val) =>
                         ref.read(confirmPasswordProvider.notifier).state = val,
@@ -181,7 +238,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                           ),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              // Save registered email & password for login
+                              // Save registered credentials for login
+                              ref.read(registeredNameProvider.notifier).state =
+                                  nameController.text.trim();
                               ref.read(registeredEmailProvider.notifier).state =
                                   emailController.text.trim();
                               ref.read(registeredPasswordProvider.notifier).state =
@@ -193,6 +252,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                               );
 
                               // Clear controllers & input providers
+                              nameController.clear();
                               emailController.clear();
                               passwordController.clear();
                               confirmPasswordController.clear();

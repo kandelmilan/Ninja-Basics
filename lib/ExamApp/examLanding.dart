@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test_app/ExamApp/analysis.dart';
+import 'package:flutter_test_app/ExamApp/level.dart';
+import 'package:flutter_test_app/ExamApp/mock_test_result.dart';
+import 'package:flutter_test_app/ExamApp/settings_screen.dart';
 import 'package:flutter_test_app/pages/generalUI.dart';
+import 'package:flutter_test_app/providers/user_state.dart';
 
 class examLanding extends ConsumerStatefulWidget {
   examLanding({super.key});
@@ -45,18 +49,12 @@ class _examLandingState extends ConsumerState<examLanding> {
   }
 
   List<Widget> _buildPages() => [
-        _buildHomePage(),
-        Center(
-            child: Text('Practice Page',
-                style: TextStyle(fontSize: 24, color: Colors.grey.shade600))),
-        Center(
-            child: Text('Mocktest Page',
-                style: TextStyle(fontSize: 24, color: Colors.grey.shade600))),
-        Analysis(),
-        Center(
-            child: Text('Settings Page',
-                style: TextStyle(fontSize: 24, color: Colors.grey.shade600))),
-      ];
+    _buildHomePage(),
+    Level(),
+    const MockTestResultScreen(),
+    Analysis(),
+    const SettingsScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -66,45 +64,88 @@ class _examLandingState extends ConsumerState<examLanding> {
     return Scaffold(
       backgroundColor: const Color(0xFFEEF2F5),
       body: pages[selectedIndex],
-      bottomNavigationBar: Consumer(
-        builder: (context, ref, child) {
-          final selectedIndex = ref.watch(selectedIndexProvider);
+      bottomNavigationBar: _customBottomNavBar(),
+    );
+  }
 
-          return BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.white,
-            selectedItemColor: Colors.blue,
-            unselectedItemColor: Colors.grey.shade600,
-            currentIndex: selectedIndex,
-            onTap: (index) {
-              ref.read(selectedIndexProvider.notifier).state = index;
-            },
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.my_library_books_sharp),
-                label: 'Practice',
+  Widget _customBottomNavBar() {
+    final currentIndex = ref.watch(selectedIndexProvider);
+
+    final items = [
+      _BottomNavItemData(icon: Icons.home, label: 'Home'),
+      _BottomNavItemData(icon: Icons.my_library_books_sharp, label: 'Practice'),
+      _BottomNavItemData(icon: Icons.school, label: 'Tests'),
+      _BottomNavItemData(icon: Icons.analytics_outlined, label: 'Analytics'),
+      _BottomNavItemData(icon: Icons.settings, label: 'Settings'),
+    ];
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 20,
+            offset: const Offset(0, -4),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: SafeArea(
+        top: false,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: List.generate(items.length, (index) {
+            final item = items[index];
+            final isSelected = index == currentIndex;
+
+            return GestureDetector(
+              onTap: () {
+                ref.read(selectedIndexProvider.notifier).state = index;
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? const Color(0xFF635BFF)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      item.icon,
+                      size: 20,
+                      color: isSelected ? Colors.white : Colors.grey.shade600,
+                    ),
+                    if (isSelected) ...[
+                      const SizedBox(width: 6),
+                      Text(
+                        item.label,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.school),
-                label: 'Mocktest',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.analytics_outlined),
-                label: 'Analytics',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: 'Settings',
-              ),
-            ],
-          );
-        },
+            );
+          }),
+        ),
       ),
     );
   }
 
   Widget _greetingSection() {
+    final name = ref.watch(loggedInNameProvider);
+    final displayName = name.isEmpty ? 'Rajan' : name;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -120,13 +161,16 @@ class _examLandingState extends ConsumerState<examLanding> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                children: const [
+                children: [
                   Text(
-                    "Hi, Rajan",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    "Hi, $displayName",
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  SizedBox(width: 6),
-                  Text("👋"),
+                  const SizedBox(width: 6),
+                  const Text("👋"),
                 ],
               ),
               const SizedBox(height: 4),
@@ -423,6 +467,13 @@ class _examLandingState extends ConsumerState<examLanding> {
       ),
     );
   }
+}
+
+class _BottomNavItemData {
+  final IconData icon;
+  final String label;
+
+  _BottomNavItemData({required this.icon, required this.label});
 }
 
 Widget _statCard({

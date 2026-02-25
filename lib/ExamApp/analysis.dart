@@ -32,7 +32,8 @@ Widget _buildTopStats() {
     physics: const NeverScrollableScrollPhysics(),
     mainAxisSpacing: 12,
     crossAxisSpacing: 12,
-    childAspectRatio: 1.3,
+    // Slightly taller cards to avoid vertical overflow
+    childAspectRatio: 0.95,
     children: [
       _statCard(title: "Overall Accuracy", value: "73%", color: Colors.blue),
       _statCard(
@@ -63,34 +64,127 @@ Widget _statCard({
   required Color color,
   bool isDarkText = false,
 }) {
+  final bool isPrimaryCard = !isDarkText;
+
   return Container(
-    padding: const EdgeInsets.all(16),
-    decoration: BoxDecoration(
-      color: color,
-      borderRadius: BorderRadius.circular(20),
-      boxShadow: [
-        BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10),
-      ],
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: TextStyle(color: isDarkText ? Colors.black54 : Colors.white70),
-        ),
-        const Spacer(),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: isDarkText ? Colors.black : Colors.white,
+      padding: const EdgeInsets.fromLTRB(14, 14, 14, 10),
+      decoration: BoxDecoration(
+        gradient: isPrimaryCard
+            ? LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  color.withOpacity(0.95),
+                  color.withOpacity(0.75),
+                ],
+              )
+            : null,
+        color: isPrimaryCard ? null : Colors.white,
+        borderRadius: BorderRadius.circular(22),
+        border: isPrimaryCard
+            ? null
+            : Border.all(
+                color: Colors.grey.shade200,
+                width: 1,
+              ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 14,
+            offset: const Offset(0, 6),
           ),
-        ),
-      ],
-    ),
-  );
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color:
+                            isPrimaryCard ? Colors.white70 : Colors.grey[700],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: isPrimaryCard
+                            ? Colors.white.withOpacity(0.14)
+                            : color.withOpacity(0.12),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Text(
+                        "Last 7 days",
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w500,
+                          color: isPrimaryCard ? Colors.white : color,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 12),
+              Container(
+                height: 48,
+                width: 48,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isPrimaryCard
+                      ? Colors.white.withOpacity(0.18)
+                      : color.withOpacity(0.08),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: isPrimaryCard ? Colors.white : Colors.black,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Container(
+            height: 5,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(999),
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: isPrimaryCard
+                    ? [
+                        Colors.white.withOpacity(0.85),
+                        Colors.white.withOpacity(0.4),
+                      ]
+                    : [
+                        color.withOpacity(0.8),
+                        color.withOpacity(0.25),
+                      ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
 }
 
 Widget _subPerformance() {
@@ -262,6 +356,70 @@ Widget _smartInsights() {
         icon: Icons.trending_up,
         bgColor: const Color(0xFFE8F0FE),
         iconColor: Colors.blue,
+      ),
+      const SizedBox(height: 12),
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Next recommended action",
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey[800],
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    "Focus 20 mins on weak areas today.",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 12),
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF2F54EB),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: const Text(
+                "View detailed report",
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     ],
   );

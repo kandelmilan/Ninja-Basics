@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test_app/ExamApp/examLanding.dart';
+import 'package:flutter_test_app/providers/user_state.dart';
 import 'landing_page.dart';
 import 'signup.dart';
 
@@ -15,10 +16,18 @@ class LoginPage extends ConsumerStatefulWidget {
   ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
+String _extractNameFromEmail(String email) {
+  final username = email.split('@').first.trim();
+  if (username.isEmpty) return 'User';
+  return username[0].toUpperCase() + username.substring(1);
+}
+
 class _LoginPageState extends ConsumerState<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
+
+  bool _obscurePassword = true;
 
   @override
   void initState() {
@@ -93,6 +102,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       //  Email
                       TextFormField(
                         controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
                         decoration:InputDecoration(
                           labelText: 'Email',
                           prefixIcon: Icon(Icons.email, color: Colors.indigo),
@@ -119,7 +130,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       // Password
                       TextFormField(
                         controller: passwordController,
-                        obscureText: true,
+                        obscureText: _obscurePassword,
                         decoration: InputDecoration(
                           labelText: 'Password',
                           prefixIcon: Icon(Icons.lock, color: Colors.indigo),
@@ -129,6 +140,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           focusedBorder: OutlineInputBorder(
                             borderSide:
                             BorderSide(color: Colors.indigo, width: 2),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _obscurePassword = !_obscurePassword;
+                              });
+                            },
                           ),
                         ),
                         onChanged: (val) =>
@@ -160,6 +183,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               final registeredPassword = ref.watch(registeredPasswordProvider);
 
                               if (email == registeredEmail && password == registeredPassword) {
+                                ref.read(loggedInEmailProvider.notifier).state = email;
+                                // Try to use registered full name if available
+                                try {
+                                  final registeredName = ref.read(registeredNameProvider);
+                                  ref.read(loggedInNameProvider.notifier).state =
+                                      (registeredName.isNotEmpty)
+                                          ? registeredName
+                                          : _extractNameFromEmail(email);
+                                } catch (_) {
+                                  ref.read(loggedInNameProvider.notifier).state =
+                                      _extractNameFromEmail(email);
+                                }
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
@@ -167,6 +202,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                   ),
                                 );
                               } else if(email == 'admin@gmail.com' && password == 'admin123') {
+                                ref.read(loggedInEmailProvider.notifier).state = email;
+                                ref.read(loggedInNameProvider.notifier).state = 'Admin';
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
