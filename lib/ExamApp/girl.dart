@@ -17,9 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        textTheme: GoogleFonts.poppinsTextTheme(),
-      ),
+      theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme()),
       home: const ValentineApp(),
     );
   }
@@ -50,8 +48,7 @@ class ValentineApp extends ConsumerWidget {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: page,
         selectedItemColor: Colors.pink,
-        onTap: (i) =>
-        ref.read(pageProvider.notifier).state = i,
+        onTap: (i) => ref.read(pageProvider.notifier).state = i,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.list), label: "Reasons"),
@@ -79,10 +76,7 @@ class HomeScreen extends StatelessWidget {
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 10),
-          const Text(
-            "To My Beautiful Girl 💕",
-            style: TextStyle(fontSize: 18),
-          ),
+          const Text("To My Beautiful Girl 💕", style: TextStyle(fontSize: 18)),
           const SizedBox(height: 40),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -94,13 +88,12 @@ class HomeScreen extends StatelessWidget {
                 context: context,
                 builder: (_) => AlertDialog(
                   title: const Text("Surprise 🎁"),
-                  content: const Text(
-                      "You are the best thing that ever happened to me. I love you forever ❤️"),
+                  content: const Text(" I love you forever ❤️"),
                 ),
               );
             },
             child: const Text("Tap for Surprise 💌"),
-          )
+          ),
         ],
       ),
     );
@@ -115,7 +108,7 @@ class ReasonsScreen extends StatelessWidget {
     "You believe in me when I doubt myself 💪",
     "Your laugh is my favorite sound 🎶",
     "You care so deeply ❤️",
-    "Life feels better with you 🌸"
+    "Life feels better with you 🌸",
   ];
 
   @override
@@ -128,7 +121,8 @@ class ReasonsScreen extends StatelessWidget {
             elevation: 10,
             margin: const EdgeInsets.all(30),
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20)),
+              borderRadius: BorderRadius.circular(20),
+            ),
             child: Padding(
               padding: const EdgeInsets.all(30),
               child: Text(
@@ -154,11 +148,11 @@ class LetterScreen extends StatelessWidget {
       child: SingleChildScrollView(
         child: Text(
           "My Love,\n\n"
-              "Before you, life was normal. After you, everything became magical.\n\n"
-              "You are my peace, my happiness, my forever.\n\n"
-              "No matter what happens, I promise to always stand by you.\n\n"
-              "Happy Valentine’s Day ❤️\n\n"
-              "Yours Always 💕",
+          "Before you, life was normal. After you, everything became magical.\n\n"
+          "You are my peace, my happiness, my forever.\n\n"
+          "No matter what happens, I promise to always stand by you.\n\n"
+          "Happy Valentine’s Day ❤️\n\n"
+          "Yours Always 💕",
           style: const TextStyle(fontSize: 18),
         ),
       ),
@@ -178,15 +172,18 @@ class CounterScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text("We have been together for ❤️",
-              style: TextStyle(fontSize: 20)),
+          const Text(
+            "We have been together for ❤️",
+            style: TextStyle(fontSize: 20),
+          ),
           const SizedBox(height: 20),
           Text(
             "$days Days",
             style: const TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-                color: Colors.pink),
+              fontSize: 40,
+              fontWeight: FontWeight.bold,
+              color: Colors.pink,
+            ),
           ),
         ],
       ),
@@ -232,8 +229,11 @@ class _FloatingHeartsState extends State<FloatingHearts>
           return Positioned(
             left: pos.dx * MediaQuery.of(context).size.width,
             top: pos.dy * MediaQuery.of(context).size.height - 50,
-            child: const Icon(Icons.favorite,
-                color: Colors.pinkAccent, size: 20),
+            child: const Icon(
+              Icons.favorite,
+              color: Colors.pinkAccent,
+              size: 20,
+            ),
           );
         }).toList(),
       ),
