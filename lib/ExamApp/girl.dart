@@ -17,7 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme()),
+      theme: ThemeData(
+        textTheme: GoogleFonts.poppinsTextTheme(),
+      ),
       home: const ValentineApp(),
     );
   }
@@ -31,30 +33,61 @@ class ValentineApp extends ConsumerWidget {
     final page = ref.watch(pageProvider);
 
     return Scaffold(
-      body: Stack(
-        children: [
-          const FloatingHearts(),
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 500),
-            child: [
-              const HomeScreen(),
-              const ReasonsScreen(),
-              const LetterScreen(),
-              const CounterScreen(),
-            ][page],
+      extendBody: true,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFFFE4EC),
+              Color(0xFFFFC1D9),
+              Color(0xFFFF9ECF),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-        ],
+        ),
+        child: Stack(
+          children: [
+            const FloatingHearts(),
+            SafeArea(
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 600),
+                transitionBuilder: (child, animation) =>
+                    FadeTransition(opacity: animation, child: child),
+                child: [
+                  const HomeScreen(),
+                  const ReasonsScreen(),
+                  const LetterScreen(),
+                  const CounterScreen(),
+                ][page],
+              ),
+            ),
+          ],
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: page,
-        selectedItemColor: Colors.pink,
-        onTap: (i) => ref.read(pageProvider.notifier).state = i,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: "Reasons"),
-          BottomNavigationBarItem(icon: Icon(Icons.mail), label: "Letter"),
-          BottomNavigationBarItem(icon: Icon(Icons.timer), label: "Us"),
-        ],
+      bottomNavigationBar: ClipRRect(
+        borderRadius:
+            const BorderRadius.vertical(top: Radius.circular(25)),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          elevation: 10,
+          currentIndex: page,
+          selectedItemColor: Colors.pink,
+          unselectedItemColor: Colors.grey,
+          type: BottomNavigationBarType.fixed,
+          onTap: (i) =>
+              ref.read(pageProvider.notifier).state = i,
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.favorite), label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.list), label: "Reasons"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.mail), label: "Letter"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.timer), label: "Us"),
+          ],
+        ),
       ),
     );
   }
@@ -69,30 +102,64 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.favorite, color: Colors.pink, size: 80),
-          const SizedBox(height: 20),
+          TweenAnimationBuilder(
+            tween: Tween(begin: 0.9, end: 1.2),
+            duration: const Duration(seconds: 2),
+            curve: Curves.easeInOut,
+            builder: (context, value, child) {
+              return Transform.scale(
+                scale: value as double,
+                child: const Icon(Icons.favorite,
+                    color: Colors.white, size: 100),
+              );
+            },
+          ),
+          const SizedBox(height: 30),
           const Text(
             "Happy Valentine’s Day ❤️",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
           const SizedBox(height: 10),
-          const Text("To My Beautiful Girl 💕", style: TextStyle(fontSize: 18)),
+          const Text(
+            "To My Beautiful Girl 💕",
+            style: TextStyle(
+                fontSize: 20, color: Colors.white70),
+          ),
           const SizedBox(height: 40),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.pink,
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.pink,
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 35, vertical: 15),
+              shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.circular(30),
+              ),
             ),
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (_) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(20)),
                   title: const Text("Surprise 🎁"),
-                  content: const Text(" I love you forever ❤️"),
+                  content: const Text(
+                      "I love you forever ❤️"),
                 ),
               );
             },
-            child: const Text("Tap for Surprise 💌"),
+            child: const Text(
+              "Tap for Surprise 💌",
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
@@ -117,18 +184,23 @@ class ReasonsScreen extends StatelessWidget {
       itemCount: reasons.length,
       itemBuilder: (context, index) {
         return Center(
-          child: Card(
-            elevation: 10,
+          child: Container(
             margin: const EdgeInsets.all(30),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+            padding: const EdgeInsets.all(30),
+            decoration: BoxDecoration(
+              borderRadius:
+                  BorderRadius.circular(25),
+              color: Colors.white.withOpacity(0.3),
+              border: Border.all(
+                  color: Colors.white.withOpacity(0.4)),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(30),
-              child: Text(
-                reasons[index],
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 20),
+            child: Text(
+              reasons[index],
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
               ),
             ),
           ),
@@ -144,16 +216,29 @@ class LetterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(30),
-      child: SingleChildScrollView(
-        child: Text(
-          "My Love,\n\n"
-          "Before you, life was normal. After you, everything became magical.\n\n"
-          "You are my peace, my happiness, my forever.\n\n"
-          "No matter what happens, I promise to always stand by you.\n\n"
-          "Happy Valentine’s Day ❤️\n\n"
-          "Yours Always 💕",
-          style: const TextStyle(fontSize: 18),
+      padding: const EdgeInsets.all(25),
+      child: Center(
+        child: Container(
+          padding: const EdgeInsets.all(25),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.9),
+            borderRadius:
+                BorderRadius.circular(25),
+          ),
+          child: const SingleChildScrollView(
+            child: Text(
+              "My Love,\n\n"
+              "Before you, life was normal. After you, everything became magical.\n\n"
+              "You are my peace, my happiness, my forever.\n\n"
+              "No matter what happens, I promise to always stand by you.\n\n"
+              "Happy Valentine’s Day ❤️\n\n"
+              "Yours Always 💕",
+              style: TextStyle(
+                fontSize: 18,
+                height: 1.6,
+              ),
+            ),
+          ),
         ),
       ),
     );
@@ -165,27 +250,36 @@ class CounterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final startDate = DateTime(2023, 5, 1); // CHANGE THIS
-    final days = DateTime.now().difference(startDate).inDays;
+    final startDate =
+        DateTime(2023, 5, 1); // Change your date
+    final days =
+        DateTime.now().difference(startDate).inDays;
 
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "We have been together for ❤️",
-            style: TextStyle(fontSize: 20),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            "$days Days",
-            style: const TextStyle(
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
-              color: Colors.pink,
+      child: Container(
+        padding: const EdgeInsets.all(40),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.9),
+          shape: BoxShape.circle,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              "Together For ❤️",
+              style: TextStyle(fontSize: 20),
             ),
-          ),
-        ],
+            const SizedBox(height: 15),
+            Text(
+              "$days Days",
+              style: const TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+                color: Colors.pink,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -195,11 +289,12 @@ class FloatingHearts extends StatefulWidget {
   const FloatingHearts({super.key});
 
   @override
-  State<FloatingHearts> createState() => _FloatingHeartsState();
+  State<FloatingHearts> createState() =>
+      _FloatingHeartsState();
 }
 
-class _FloatingHeartsState extends State<FloatingHearts>
-    with SingleTickerProviderStateMixin {
+class _FloatingHeartsState
+    extends State<FloatingHearts> {
   late Timer timer;
   final random = Random();
   List<Offset> hearts = [];
@@ -207,10 +302,17 @@ class _FloatingHeartsState extends State<FloatingHearts>
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(milliseconds: 800), (_) {
+    timer = Timer.periodic(
+        const Duration(milliseconds: 800), (_) {
       setState(() {
-        hearts.add(Offset(random.nextDouble(), 1));
-        if (hearts.length > 20) hearts.removeAt(0);
+        hearts = hearts
+            .map((e) =>
+                Offset(e.dx, e.dy - 0.05))
+            .where((e) => e.dy > 0)
+            .toList();
+
+        hearts.add(
+            Offset(random.nextDouble(), 1));
       });
     });
   }
@@ -227,11 +329,18 @@ class _FloatingHeartsState extends State<FloatingHearts>
       child: Stack(
         children: hearts.map((pos) {
           return Positioned(
-            left: pos.dx * MediaQuery.of(context).size.width,
-            top: pos.dy * MediaQuery.of(context).size.height - 50,
+            left: pos.dx *
+                MediaQuery.of(context)
+                    .size
+                    .width,
+            top: pos.dy *
+                    MediaQuery.of(context)
+                        .size
+                        .height -
+                50,
             child: const Icon(
               Icons.favorite,
-              color: Colors.pinkAccent,
+              color: Colors.white70,
               size: 20,
             ),
           );
