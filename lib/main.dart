@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test_app/ExamApp/examLanding.dart';
 import 'package:flutter_test_app/ExamApp/LogoLanding.dart';
+import 'package:flutter_test_app/ExamApp/mock_test_result.dart';
+import 'package:flutter_test_app/ExamApp/mock_test_screen.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: MyApp());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: MockTestScreen());
   }
 }
 
