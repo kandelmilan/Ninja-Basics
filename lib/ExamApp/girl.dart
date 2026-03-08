@@ -42,7 +42,7 @@ class ValentineApp extends ConsumerWidget {
         ),
         child: Stack(
           children: [
-            const FloatingHearts(),
+            // const FloatingHearts(),
             SafeArea(
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 600),

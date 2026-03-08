@@ -73,7 +73,6 @@ class _MockTestScreenState extends State<MockTestScreen> {
   Widget _header() {
     return Container(
       padding: const EdgeInsets.all(16),
-
       child: Row(
         children: [
           const Expanded(
@@ -89,7 +88,7 @@ class _MockTestScreenState extends State<MockTestScreen> {
 
   Widget _tabBar() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 1),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: Colors.grey.shade200,
@@ -226,7 +225,10 @@ class TestCard extends StatelessWidget {
                 ),
               ),
               onPressed: () {},
-              child: const Text("Start Test", style: TextStyle(fontSize: 16)),
+              child: const Text(
+                "Start Test",
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
             ),
           ),
         ],
